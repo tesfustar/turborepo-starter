@@ -1,50 +1,181 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------- */
+/* Design tokens (raw CSS variables) */
+/* -------------------------------------------------- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* body */
+  --background: 255 255 255;
+  --foreground: 72 72 72;
+  --muted: 227 227 227;
+  --muted-foreground: 146 146 146;
+  --font-outfit: "Outfit", system-ui, sans-serif;
+  /* gray */
+  --gray-0: 255 255 255;
+  --gray-50: 250 250 250;
+  --gray-100: 241 241 241;
+  --gray-200: 227 227 227;
+  --gray-300: 223 223 223;
+  --gray-400: 146 146 146;
+  --gray-500: 102 102 102;
+  --gray-600: 72 72 72;
+  --gray-700: 51 51 51;
+  --gray-800: 34 34 34;
+  --gray-900: 17 17 17;
+  --gray-950: 0 0 0;
+
+  /* primary */
+  --primary-lighter: 185 42 195;
+  --primary-default: 130 20 137;
+  --primary-dark: 75 0 130;
+  --primary-foreground: 255 255 255;
+
+  /* secondary */
+  --secondary-lighter: 221 227 255;
+  --secondary-default: 78 54 245;
+  --secondary-dark: 67 42 216;
+  --secondary-foreground: 255 255 255;
+
+  /* status */
+  --red-lighter: 247 212 214;
+  --red-default: 238 68 68;
+  --red-dark: 220 38 38;
+
+  --orange-lighter: 255 239 207;
+  --orange-default: 245 166 35;
+  --orange-dark: 171 87 10;
+
+  --blue-lighter: 211 229 255;
+  --blue-default: 0 112 243;
+  --blue-dark: 7 97 209;
+
+  --green-lighter: 185 249 207;
+  --green-default: 17 168 73;
+  --green-dark: 17 132 60;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* -------------------------------------------------- */
+/* Dark theme */
+/* -------------------------------------------------- */
+
+[data-theme="dark"] {
+  --background: 8 9 14;
+  --foreground: 223 223 223;
+  --muted: 51 51 51;
+  --muted-foreground: 102 102 102;
+
+  --gray-0: 0 0 0;
+  --gray-50: 17 17 17;
+  --gray-100: 34 34 34;
+  --gray-200: 51 51 51;
+  --gray-300: 72 72 72;
+  --gray-400: 102 102 102;
+  --gray-500: 146 146 146;
+  --gray-600: 223 223 223;
+  --gray-700: 227 227 227;
+  --gray-800: 241 241 241;
+  --gray-900: 250 250 250;
+  --gray-950: 255 255 255;
+
+  --primary-lighter: 23 82 217;
+  --primary-default: 13 48 129;
+  --primary-dark: 2 33 104;
+  --primary-foreground: 0 0 0;
+
+  --secondary-lighter: 31 22 90;
+  --secondary-dark: 193 203 255;
+
+  --red-lighter: 80 0 0;
+  --red-dark: 255 193 193;
+
+  --orange-lighter: 68 29 4;
+  --orange-dark: 252 234 139;
+
+  --blue-lighter: 13 51 94;
+  --blue-dark: 181 233 255;
+
+  --green-lighter: 3 48 22;
+  --green-dark: 185 249 207;
+}
+
+/* -------------------------------------------------- */
+/* Tailwind theme mapping (v4) */
+/* -------------------------------------------------- */
+
+@theme inline {
+  --font-outfit: var(--font-outfit);
+
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+
+  --color-primary: rgb(var(--primary-default));
+  --color-primary-dark: rgb(var(--primary-dark));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+
+  --color-secondary: rgb(var(--secondary-default));
+  --color-secondary-dark: rgb(var(--secondary-dark));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+}
+
+/* -------------------------------------------------- */
+/* Base styles */
+/* -------------------------------------------------- */
+
+@layer base {
+  html,
+  body {
+    @apply h-full overflow-auto;
   }
-}
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.imgDark {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
   html {
-    color-scheme: dark;
+    @apply antialiased;
   }
 
-  .imgLight {
-    display: none;
+  #player {
+    @apply dark:bg-gray-50;
   }
-  .imgDark {
-    display: unset;
+
+  input::-ms-clear,
+  input::-ms-reveal {
+    @apply hidden;
   }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    @apply hidden;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    @apply appearance-none m-0;
+  }
+
+  input[type="checkbox"]:checked {
+    @apply bg-none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    @apply font-outfit font-bold text-gray-900 dark:text-gray-700;
+  }
+
+  q {
+    @apply text-lg;
+  }
+}
+
+/* -------------------------------------------------- */
+/* Utilities */
+/* -------------------------------------------------- */
+
+.gradient-btn {
+  @apply bg-gradient-to-r from-primary to-primary-dark;
+  @apply hover:opacity-90 transition disabled:cursor-not-allowed;
 }
